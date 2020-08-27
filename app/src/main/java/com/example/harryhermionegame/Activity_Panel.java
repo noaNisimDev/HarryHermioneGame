@@ -29,7 +29,7 @@ public class Activity_Panel extends AppCompatActivity {
     private ImageButton panel_IMG_wandOfHarry;
 
     //values of powers hermione
-    private int valueOfWater = 10;
+    private int valueOfWater = 15;
     private int valueOfPotionOfHermione = 25;
     private int valueOfWandHermione = 50;
 
