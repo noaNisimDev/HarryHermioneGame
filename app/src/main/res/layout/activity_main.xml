@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_Panel"
+    tools:layout_editor_absoluteX="95dp"
+    tools:layout_editor_absoluteY="-83dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/panel_LAY_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_backgroug"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        //hermione
+
+        <ImageView
+            android:id="@+id/panel_IMG_hermione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/img_hermione" />
+        //the powers of hermione
+
+        <ProgressBar
+            android:id="@+id/panel_PRB_simpleProgressBarHermione"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@id/panel_IMG_hermione"
+            android:layout_width="0dp"
+            android:layout_alignLeft="@+id/panel_IMG_hermione"
+            android:layout_alignRight="@+id/panel_IMG_hermione"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:background="#bc6f7d"
+            android:max="100"
+            android:min="0"/>
+
+        <ImageButton
+            android:id="@+id/panel_IMG_spellOfWater"
+            android:layout_width="66dp"
+            android:layout_height="70dp"
+            android:layout_above="@id/panel_IMG_potionOfHermione"
+            android:layout_toEndOf="@+id/panel_IMG_hermione"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_water"
+            app:layout_constraintBottom_toTopOf="@+id/panel_IMG_hermione" />
+
+        <ImageButton
+            android:id="@+id/panel_IMG_potionOfHermione"
+            android:layout_width="66dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/panel_IMG_hermione"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_potionhermione" />
+
+        <ImageButton
+            android:id="@+id/panel_IMG_wandOfHermione"
+            android:layout_width="66dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/panel_IMG_potionOfHermione"
+            android:layout_toEndOf="@+id/panel_IMG_hermione"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_wandhermione" />
+
+
+        //harry
+
+        <ImageView
+            android:id="@+id/panel_IMG_harry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/img_harry" />
+        //the powers of harry
+
+        <ProgressBar
+            android:id="@+id/panel_PRB_simpleProgressBarHarry"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_above="@id/panel_IMG_harry"
+            android:layout_width="0dp"
+            android:layout_alignLeft="@+id/panel_IMG_harry"
+            android:layout_alignRight="@+id/panel_IMG_harry"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:background="#5592c1"
+            android:max="100" />
+
+        <ImageButton
+            android:id="@+id/panel_IMG_spellOfFire"
+            android:layout_width="66dp"
+            android:layout_height="70dp"
+            android:layout_above="@id/panel_IMG_potionOfHarry"
+            android:layout_toLeftOf="@+id/panel_IMG_harry"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_fire"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@+id/panel_IMG_hermione" />
+
+        <ImageButton
+            android:id="@+id/panel_IMG_potionOfHarry"
+            android:layout_width="66dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/panel_IMG_harry"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_potionharry" />
+
+        <ImageButton
+            android:id="@+id/panel_IMG_wandOfHarry"
+            android:layout_width="66dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/panel_IMG_potionOfHarry"
+            android:layout_toLeftOf="@+id/panel_IMG_harry"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_wandharry" />
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
