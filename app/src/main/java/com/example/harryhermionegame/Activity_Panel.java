@@ -13,12 +13,13 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class Activity_Panel extends AppCompatActivity {
 
     private ImageView panel_IMG_hermione;
     private ProgressBar panel_PRB_simpleProgressBarHermione;
-    private ImageButton panel_IMG_spellOfWater;
+    private ImageButton panel_IMG_spellOfWater ;
     private ImageButton panel_IMG_potionOfHermione;
     private ImageButton panel_IMG_wandOfHermione;
 
@@ -29,7 +30,7 @@ public class Activity_Panel extends AppCompatActivity {
     private ImageButton panel_IMG_wandOfHarry;
 
     //values of powers hermione
-    private int valueOfWater = 12;
+    private int valueOfWater = 10;
     private int valueOfPotionOfHermione = 25;
     private int valueOfWandHermione = 50;
 
@@ -37,6 +38,9 @@ public class Activity_Panel extends AppCompatActivity {
     private int valueOfFire = 10;
     private int valueOfPotionOfHarry = 25;
     private int valueOfWandHarry = 50;
+
+    private int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
+    private  int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
 
 
 
@@ -49,11 +53,10 @@ public class Activity_Panel extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_main);
 
-        ProgressBar progressBarHermione = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHermione);
-        progressBarHermione.setProgress(progressBarHermione.getMax());
+        panel_PRB_simpleProgressBarHermione.setProgress(panel_PRB_simpleProgressBarHermione.getMax());
 
-        Log.d("Debug", "onCreate_spellOfWater after change progressbar: " + progressBarHermione.getProgress());
-        ProgressBar progressBarHarry = (ProgressBar) findViewById(R.id.panel_PRB_simpleProgressBarHarry);
+        Log.d("Debug", "onCreate_spellOfWater after change progressbar: " + panel_PRB_simpleProgressBarHermione.getProgress());
+        ProgressBar progressBarHarry = panel_PRB_simpleProgressBarHermione;
         progressBarHarry.setProgress(progressBarHarry.getMax());
 
 
@@ -66,15 +69,12 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
                 Log.d("Debug", "onClick_spellOfWater: arrived");
-               int currentHarryPrb = progressBar.getProgress();
                 Log.d("Debug", "onClick_spellOfWater current progressbar: " + currentHarryPrb);
-
-                progressBar.setProgress(currentHarryPrb - valueOfWater, true);
-
-                Log.d("Debug", "onClick_spellOfWater after change progressbar: " + progressBar.getProgress());
-
+                panel_PRB_simpleProgressBarHarry.setProgress(currentHarryPrb - valueOfWater, true);
+                Log.d("Debug", "onClick_spellOfWater after change progressbar: " + panel_PRB_simpleProgressBarHarry.getProgress());
+              //ToDo
+                panel_IMG_spellOfWater.setClickable(false);
             }
         });
         panel_IMG_potionOfHermione.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +82,7 @@ public class Activity_Panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
-                int currentHermionePro = progressBar.getProgress();
-                progressBar.setProgress(currentHermionePro - valueOfPotionOfHermione, true );
+                progressBar.setProgress(currentHarryPrb - valueOfPotionOfHermione, true );
             }
         });
 
@@ -92,8 +91,7 @@ public class Activity_Panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
-                int currentHermionePro = progressBar.getProgress();
-                progressBar.setProgress(currentHermionePro - valueOfWandHermione, true );
+                progressBar.setProgress(currentHarryPrb - valueOfWandHermione, true );
             }
         });
 
@@ -102,14 +100,51 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHermione);
-                int currentHarryPrb = progressBar.getProgress();
-                progressBar.setProgress(currentHarryPrb - valueOfWater, true);
+                panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfFire, true);
             }
         });
 
+        panel_IMG_potionOfHarry.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfPotionOfHarry, true);
+            }
+        });
+
+        panel_IMG_wandOfHarry.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfWandHarry, true);
+            }
+        });
+
+        checkGameOver();
+        lastLifeChangeStylePrb();
 
     }
+
+    private void lastLifeChangeStylePrb(){
+        if(panel_PRB_simpleProgressBarHarry.getProgress() <= 25){
+            panel_PRB_simpleProgressBarHarry.setBackgroundColor(-65536 );
+        }
+        if(panel_PRB_simpleProgressBarHermione.getProgress() <= 25){
+            panel_PRB_simpleProgressBarHermione.setBackgroundColor(-65536 );
+        }
+
+    }
+
+    private void checkGameOver() {
+        if(panel_PRB_simpleProgressBarHermione.getProgress() == 0){
+            Toast.makeText(this, "Harry is won!", Toast.LENGTH_SHORT).show();
+        }
+        if(panel_PRB_simpleProgressBarHarry.getProgress() == 0){
+            Toast.makeText(this, "Hermione is won!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
     private void findViews() {
 
