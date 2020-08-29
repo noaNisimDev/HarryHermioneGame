@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class Activity_Panel extends AppCompatActivity {
 
     //style
     private int redColor = -65536;
+    private int rangeOfLastLife = 25;
 
 
 
@@ -58,8 +60,13 @@ public class Activity_Panel extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_main);
 
-
         findViews();
+
+        //ladies first - hermione starts first
+        disableHarryButtons();
+        Toast hermioneStartMsg = Toast.makeText(this,"Hermione's turn", Toast.LENGTH_SHORT);
+        hermioneStartMsg.show();
+
         ProgressBar progressBarHermione = panel_PRB_simpleProgressBarHermione;
         progressBarHermione.setProgress(progressBarHermione.getMax());
         ProgressBar progressBarHarry = panel_PRB_simpleProgressBarHarry;
@@ -76,7 +83,10 @@ public class Activity_Panel extends AppCompatActivity {
                 int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
                 panel_PRB_simpleProgressBarHarry.setProgress(currentHarryPrb - valueOfWater, true);
                 updateColorPrb();
+                disableHermioneButtons();
+                enableHarryButtons();
                 checkGameOver();
+
             }
         });
         panel_IMG_potionOfHermione.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +97,8 @@ public class Activity_Panel extends AppCompatActivity {
                 ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
                 progressBar.setProgress(currentHarryPrb - valueOfPotionOfHermione, true );
                 updateColorPrb();
+                disableHermioneButtons();
+                enableHarryButtons();
                 checkGameOver();
             }
         });
@@ -99,6 +111,8 @@ public class Activity_Panel extends AppCompatActivity {
                 ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
                 progressBar.setProgress(currentHarryPrb - valueOfWandHermione, true );
                 updateColorPrb();
+                disableHermioneButtons();
+                enableHarryButtons();
                 checkGameOver();
             }
         });
@@ -111,6 +125,8 @@ public class Activity_Panel extends AppCompatActivity {
                 int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
                 panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfFire, true);
                 updateColorPrb();
+                disableHarryButtons();
+                enableHermioneButtons();
                 checkGameOver();
             }
         });
@@ -122,6 +138,8 @@ public class Activity_Panel extends AppCompatActivity {
                 int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
                 panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfPotionOfHarry, true);
                 updateColorPrb();
+                disableHarryButtons();
+                enableHermioneButtons();
                 checkGameOver();
             }
         });
@@ -133,27 +151,24 @@ public class Activity_Panel extends AppCompatActivity {
                 int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
                 panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfWandHarry, true);
                 updateColorPrb();
+                disableHarryButtons();
+                enableHermioneButtons();
                 checkGameOver();
 
             }
         });
-
-
-
-
     }
 
     private void updateColorPrb(){
-        if(panel_PRB_simpleProgressBarHarry.getProgress() <= 25){
+        if(panel_PRB_simpleProgressBarHarry.getProgress() <= rangeOfLastLife){
             panel_PRB_simpleProgressBarHarry.setBackgroundColor(redColor);
         }
-        if(panel_PRB_simpleProgressBarHermione.getProgress() <= 25){
+        if(panel_PRB_simpleProgressBarHermione.getProgress() <= rangeOfLastLife){
             panel_PRB_simpleProgressBarHermione.setBackgroundColor(redColor);
         }
-
     }
 
-    private boolean checkGameOver() {
+    private void checkGameOver() {
         boolean harryWon = false;
         boolean hermioneWon = false;
         if(panel_PRB_simpleProgressBarHermione.getProgress() == 0){
@@ -162,32 +177,28 @@ public class Activity_Panel extends AppCompatActivity {
         if(panel_PRB_simpleProgressBarHarry.getProgress() == 0){
             hermioneWon = true;
         }
-        //disableAllButtons
         if(harryWon || hermioneWon){
-            //set all buttons to be disabled
-            panel_IMG_wandOfHarry.setClickable(false);
-            panel_IMG_wandOfHermione.setClickable(false);
-            panel_IMG_potionOfHarry.setClickable(false);
-            panel_IMG_potionOfHermione.setClickable(false);
-            panel_IMG_spellOfFire.setClickable(false);
-            panel_IMG_spellOfWater.setClickable(false);
 
-            //change all buttons images to gray for UX
-            ((ImageButton) panel_IMG_wandOfHarry).setImageResource(R.drawable.img_wandharry_gray);
-            ((ImageButton) panel_IMG_wandOfHermione).setImageResource(R.drawable.img_wandofhermione_gray);
-            ((ImageButton) panel_IMG_potionOfHarry).setImageResource(R.drawable.img_potionofharry_gray);
-            ((ImageButton) panel_IMG_potionOfHermione).setImageResource(R.drawable.img_potionofhermione_gray);
-            ((ImageButton) panel_IMG_spellOfFire).setImageResource(R.drawable.img_spelloffire_gray);
-            ((ImageButton) panel_IMG_spellOfWater).setImageResource(R.drawable.img_spellofwater_gray);
+            //disableAllButtons
+            disableHarryButtons();
+            disableHermioneButtons();
+
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_LAY_relativeLayout);
             relativeLayout.setBackgroundResource(R.drawable.img_backgroug_color);
 
-            Dialog popupDialog = new Dialog(this);
+            final Dialog popupDialog = new Dialog(this);
             popupDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
             popupDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             popupDialog.setContentView(getLayoutInflater().inflate(R.layout.popup_layout, null));
 
             popup_IMG_wizardWithCrown = popupDialog.getWindow().findViewById(R.id.popup_IMG_wizardWithCrown);
+            popupDialog.getWindow().findViewById(R.id.popup_BTN_newGame).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    popupDialog.dismiss();
+                }
+            });
+
             if(harryWon) {
                 ((ImageView) popup_IMG_wizardWithCrown).setImageResource(R.drawable.harrywon);
             }
@@ -195,14 +206,59 @@ public class Activity_Panel extends AppCompatActivity {
                 ((ImageView) popup_IMG_wizardWithCrown).setImageResource(R.drawable.hermionewon);
             }
             popupDialog.show();
-
-            return true;
         }
-        return false;
 
     }
 
 
+    private void disableHarryButtons(){
+        //set all buttons to be disabled
+        panel_IMG_wandOfHarry.setEnabled(false);
+        panel_IMG_potionOfHarry.setEnabled(false);
+        panel_IMG_spellOfFire.setEnabled(false);
+
+        //change all buttons images to gray for UX
+        ((ImageButton) panel_IMG_wandOfHarry).setImageResource(R.drawable.img_wandharry_gray);
+        ((ImageButton) panel_IMG_potionOfHarry).setImageResource(R.drawable.img_potionofharry_gray);
+        ((ImageButton) panel_IMG_spellOfFire).setImageResource(R.drawable.img_spelloffire_gray);
+    }
+
+    private void disableHermioneButtons(){
+        //set all buttons to be disabled
+        panel_IMG_wandOfHermione.setEnabled(false);
+        panel_IMG_potionOfHermione.setEnabled(false);
+        panel_IMG_spellOfWater.setEnabled(false);
+
+        //change all buttons images to gray for UX
+        ((ImageButton) panel_IMG_wandOfHermione).setImageResource(R.drawable.img_wandofhermione_gray);
+        ((ImageButton) panel_IMG_potionOfHermione).setImageResource(R.drawable.img_potionofhermione_gray);
+        ((ImageButton) panel_IMG_spellOfWater).setImageResource(R.drawable.img_spellofwater_gray);
+    }
+
+    private void enableHarryButtons(){
+
+        //set all buttons to be disabled
+        panel_IMG_wandOfHarry.setEnabled(true);
+        panel_IMG_potionOfHarry.setEnabled(true);
+        panel_IMG_spellOfFire.setEnabled(true);
+
+        //change all buttons images to gray for UX
+        ((ImageButton) panel_IMG_wandOfHarry).setImageResource(R.drawable.img_wandharry);
+        ((ImageButton) panel_IMG_potionOfHarry).setImageResource(R.drawable.img_potionharry);
+        ((ImageButton) panel_IMG_spellOfFire).setImageResource(R.drawable.img_fire);
+    }
+
+    private void enableHermioneButtons(){
+        //set all buttons to be disabled
+        panel_IMG_wandOfHermione.setEnabled(true);
+        panel_IMG_potionOfHermione.setEnabled(true);
+        panel_IMG_spellOfWater.setEnabled(true);
+
+        //change all buttons images to gray for UX
+        ((ImageButton) panel_IMG_wandOfHermione).setImageResource(R.drawable.img_wandhermione);
+        ((ImageButton) panel_IMG_potionOfHermione).setImageResource(R.drawable.img_potionhermione);
+        ((ImageButton) panel_IMG_spellOfWater).setImageResource(R.drawable.img_water);
+    }
 
 
     private void findViews() {
