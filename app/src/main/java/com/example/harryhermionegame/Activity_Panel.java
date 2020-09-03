@@ -20,15 +20,15 @@ public class Activity_Panel extends AppCompatActivity {
 
     private ImageView panel_IMG_hermione;
     private ProgressBar panel_PRB_simpleProgressBarHermione;
-    private ImageButton panel_IMG_spellOfWater ;
-    private ImageButton panel_IMG_potionOfHermione;
-    private ImageButton panel_IMG_wandOfHermione;
+    private ImageButton panel_BTN_spellOfWater;
+    private ImageButton panel_BTN_potionOfHermione;
+    private ImageButton panel_BTN_wandOfHermione;
 
     private ImageView panel_IMG_harry;
     private ProgressBar panel_PRB_simpleProgressBarHarry;
-    private ImageButton panel_IMG_spellOfFire;
-    private ImageButton panel_IMG_potionOfHarry;
-    private ImageButton panel_IMG_wandOfHarry;
+    private ImageButton panel_BTN_spellOfFire;
+    private ImageButton panel_BTN_potionOfHarry;
+    private ImageButton panel_BTN_wandOfHarry;
 
     //popup
     private ImageView popup_IMG_wizardWithCrown;
@@ -58,7 +58,7 @@ public class Activity_Panel extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_panel);
 
         findViews();
 
@@ -76,7 +76,7 @@ public class Activity_Panel extends AppCompatActivity {
         //callback - listener
         //hermione
 
-        panel_IMG_spellOfWater.setOnClickListener(new View.OnClickListener() {
+        panel_BTN_spellOfWater.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -89,7 +89,7 @@ public class Activity_Panel extends AppCompatActivity {
 
             }
         });
-        panel_IMG_potionOfHermione.setOnClickListener(new View.OnClickListener() {
+        panel_BTN_potionOfHermione.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -103,7 +103,7 @@ public class Activity_Panel extends AppCompatActivity {
             }
         });
 
-        panel_IMG_wandOfHermione.setOnClickListener(new View.OnClickListener() {
+        panel_BTN_wandOfHermione.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -118,7 +118,7 @@ public class Activity_Panel extends AppCompatActivity {
         });
 
         //harry
-        panel_IMG_spellOfFire.setOnClickListener(new View.OnClickListener() {
+        panel_BTN_spellOfFire.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -131,7 +131,7 @@ public class Activity_Panel extends AppCompatActivity {
             }
         });
 
-        panel_IMG_potionOfHarry.setOnClickListener(new View.OnClickListener() {
+        panel_BTN_potionOfHarry.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -144,7 +144,7 @@ public class Activity_Panel extends AppCompatActivity {
             }
         });
 
-        panel_IMG_wandOfHarry.setOnClickListener(new View.OnClickListener() {
+        panel_BTN_wandOfHarry.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
@@ -213,51 +213,51 @@ public class Activity_Panel extends AppCompatActivity {
 
     private void disableHarryButtons(){
         //set all buttons to be disabled
-        panel_IMG_wandOfHarry.setEnabled(false);
-        panel_IMG_potionOfHarry.setEnabled(false);
-        panel_IMG_spellOfFire.setEnabled(false);
+        panel_BTN_wandOfHarry.setEnabled(false);
+        panel_BTN_potionOfHarry.setEnabled(false);
+        panel_BTN_spellOfFire.setEnabled(false);
 
         //change all buttons images to gray for UX
-        ((ImageButton) panel_IMG_wandOfHarry).setImageResource(R.drawable.img_wandharry_gray);
-        ((ImageButton) panel_IMG_potionOfHarry).setImageResource(R.drawable.img_potionofharry_gray);
-        ((ImageButton) panel_IMG_spellOfFire).setImageResource(R.drawable.img_spelloffire_gray);
+        ((ImageButton) panel_BTN_wandOfHarry).setImageResource(R.drawable.img_wandharry_gray);
+        ((ImageButton) panel_BTN_potionOfHarry).setImageResource(R.drawable.img_potionofharry_gray);
+        ((ImageButton) panel_BTN_spellOfFire).setImageResource(R.drawable.img_spelloffire_gray);
     }
 
     private void disableHermioneButtons(){
         //set all buttons to be disabled
-        panel_IMG_wandOfHermione.setEnabled(false);
-        panel_IMG_potionOfHermione.setEnabled(false);
-        panel_IMG_spellOfWater.setEnabled(false);
+        panel_BTN_wandOfHermione.setEnabled(false);
+        panel_BTN_potionOfHermione.setEnabled(false);
+        panel_BTN_spellOfWater.setEnabled(false);
 
         //change all buttons images to gray for UX
-        ((ImageButton) panel_IMG_wandOfHermione).setImageResource(R.drawable.img_wandofhermione_gray);
-        ((ImageButton) panel_IMG_potionOfHermione).setImageResource(R.drawable.img_potionofhermione_gray);
-        ((ImageButton) panel_IMG_spellOfWater).setImageResource(R.drawable.img_spellofwater_gray);
+        ((ImageButton) panel_BTN_wandOfHermione).setImageResource(R.drawable.img_wandofhermione_gray);
+        ((ImageButton) panel_BTN_potionOfHermione).setImageResource(R.drawable.img_potionofhermione_gray);
+        ((ImageButton) panel_BTN_spellOfWater).setImageResource(R.drawable.img_spellofwater_gray);
     }
 
     private void enableHarryButtons(){
 
         //set all buttons to be disabled
-        panel_IMG_wandOfHarry.setEnabled(true);
-        panel_IMG_potionOfHarry.setEnabled(true);
-        panel_IMG_spellOfFire.setEnabled(true);
+        panel_BTN_wandOfHarry.setEnabled(true);
+        panel_BTN_potionOfHarry.setEnabled(true);
+        panel_BTN_spellOfFire.setEnabled(true);
 
         //change all buttons images to gray for UX
-        ((ImageButton) panel_IMG_wandOfHarry).setImageResource(R.drawable.img_wandharry);
-        ((ImageButton) panel_IMG_potionOfHarry).setImageResource(R.drawable.img_potionharry);
-        ((ImageButton) panel_IMG_spellOfFire).setImageResource(R.drawable.img_fire);
+        ((ImageButton) panel_BTN_wandOfHarry).setImageResource(R.drawable.img_wandharry);
+        ((ImageButton) panel_BTN_potionOfHarry).setImageResource(R.drawable.img_potionharry);
+        ((ImageButton) panel_BTN_spellOfFire).setImageResource(R.drawable.img_fire);
     }
 
     private void enableHermioneButtons(){
         //set all buttons to be disabled
-        panel_IMG_wandOfHermione.setEnabled(true);
-        panel_IMG_potionOfHermione.setEnabled(true);
-        panel_IMG_spellOfWater.setEnabled(true);
+        panel_BTN_wandOfHermione.setEnabled(true);
+        panel_BTN_potionOfHermione.setEnabled(true);
+        panel_BTN_spellOfWater.setEnabled(true);
 
         //change all buttons images to gray for UX
-        ((ImageButton) panel_IMG_wandOfHermione).setImageResource(R.drawable.img_wandhermione);
-        ((ImageButton) panel_IMG_potionOfHermione).setImageResource(R.drawable.img_potionhermione);
-        ((ImageButton) panel_IMG_spellOfWater).setImageResource(R.drawable.img_water);
+        ((ImageButton) panel_BTN_wandOfHermione).setImageResource(R.drawable.img_wandhermione);
+        ((ImageButton) panel_BTN_potionOfHermione).setImageResource(R.drawable.img_potionhermione);
+        ((ImageButton) panel_BTN_spellOfWater).setImageResource(R.drawable.img_water);
     }
 
 
@@ -266,15 +266,15 @@ public class Activity_Panel extends AppCompatActivity {
         //hermione R-id
         panel_IMG_hermione = findViewById(R.id.panel_IMG_hermione);
         panel_PRB_simpleProgressBarHermione = findViewById(R.id.panel_PRB_simpleProgressBarHermione);
-        panel_IMG_spellOfWater = findViewById(R.id.panel_IMG_spellOfWater);
-        panel_IMG_potionOfHermione = findViewById(R.id.panel_IMG_potionOfHermione);
-        panel_IMG_wandOfHermione = findViewById(R.id.panel_IMG_wandOfHermione);
+        panel_BTN_spellOfWater = findViewById(R.id.panel_BTN_spellOfWater);
+        panel_BTN_potionOfHermione = findViewById(R.id.panel_BTN_potionOfHermione);
+        panel_BTN_wandOfHermione = findViewById(R.id.panel_BTN_wandOfHermione);
         //harry R-id
         panel_IMG_harry = findViewById(R.id.panel_IMG_harry);
         panel_PRB_simpleProgressBarHarry = findViewById(R.id.panel_PRB_simpleProgressBarHarry);
-        panel_IMG_spellOfFire = findViewById(R.id.panel_IMG_spellOfFire);
-        panel_IMG_potionOfHarry = findViewById(R.id.panel_IMG_potionOfHarry);
-        panel_IMG_wandOfHarry = findViewById(R.id.panel_IMG_wandOfHarry);
+        panel_BTN_spellOfFire = findViewById(R.id.panel_BTN_spellOfFire);
+        panel_BTN_potionOfHarry = findViewById(R.id.panel_BTN_potionOfHarry);
+        panel_BTN_wandOfHarry = findViewById(R.id.panel_BTN_wandOfHarry);
 
     }
 

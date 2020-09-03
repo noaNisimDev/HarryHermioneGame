@@ -40,10 +40,10 @@
             android:min="0"/>
 
         <ImageButton
-            android:id="@+id/panel_IMG_spellOfWater"
+            android:id="@+id/panel_BTN_spellOfWater"
             android:layout_width="66dp"
             android:layout_height="70dp"
-            android:layout_above="@id/panel_IMG_potionOfHermione"
+            android:layout_above="@id/panel_BTN_potionOfHermione"
             android:layout_toEndOf="@+id/panel_IMG_hermione"
             android:scaleType="centerInside"
             android:background="@android:color/transparent"
@@ -51,7 +51,7 @@
             app:layout_constraintBottom_toTopOf="@+id/panel_IMG_hermione" />
 
         <ImageButton
-            android:id="@+id/panel_IMG_potionOfHermione"
+            android:id="@+id/panel_BTN_potionOfHermione"
             android:layout_width="66dp"
             android:layout_height="70dp"
             android:layout_centerVertical="true"
@@ -61,10 +61,10 @@
             android:src="@drawable/img_potionhermione" />
 
         <ImageButton
-            android:id="@+id/panel_IMG_wandOfHermione"
+            android:id="@+id/panel_BTN_wandOfHermione"
             android:layout_width="66dp"
             android:layout_height="70dp"
-            android:layout_below="@id/panel_IMG_potionOfHermione"
+            android:layout_below="@id/panel_BTN_potionOfHermione"
             android:layout_toEndOf="@+id/panel_IMG_hermione"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
@@ -95,10 +95,10 @@
             android:max="100" />
 
         <ImageButton
-            android:id="@+id/panel_IMG_spellOfFire"
+            android:id="@+id/panel_BTN_spellOfFire"
             android:layout_width="66dp"
             android:layout_height="70dp"
-            android:layout_above="@id/panel_IMG_potionOfHarry"
+            android:layout_above="@id/panel_BTN_potionOfHarry"
             android:layout_toLeftOf="@+id/panel_IMG_harry"
             android:scaleType="fitCenter"
             android:src="@drawable/img_fire"
@@ -106,7 +106,7 @@
             app:layout_constraintBottom_toTopOf="@+id/panel_IMG_hermione" />
 
         <ImageButton
-            android:id="@+id/panel_IMG_potionOfHarry"
+            android:id="@+id/panel_BTN_potionOfHarry"
             android:layout_width="66dp"
             android:layout_height="70dp"
             android:layout_centerVertical="true"
@@ -116,14 +116,15 @@
             android:src="@drawable/img_potionharry" />
 
         <ImageButton
-            android:id="@+id/panel_IMG_wandOfHarry"
+            android:id="@+id/panel_BTN_wandOfHarry"
             android:layout_width="66dp"
             android:layout_height="70dp"
-            android:layout_below="@id/panel_IMG_potionOfHarry"
+            android:layout_below="@id/panel_BTN_potionOfHarry"
             android:layout_toLeftOf="@+id/panel_IMG_harry"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:src="@drawable/img_wandharry" />
+
 
 
     </RelativeLayout>
