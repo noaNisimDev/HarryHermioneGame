@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".MenuActivity">
+
+    <RelativeLayout
+
+        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/img_menu_background"
+        >
+
+
+        <Button
+            android:id="@+id/menu_BTN_startGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:background="#fbb179"
+            android:fontFamily="@font/cherry_swash_bold"
+            android:paddingTop="10dp"
+            android:text="Start Magic"
+
+            android:textColor="#ffffff"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/menu_BTN_topTen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menu_BTN_startGame"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="-4dp"
+
+            android:background="#79c3fb"
+
+            android:fontFamily="@font/cherry_swash_bold"
+            android:text="Top Wizards"
+            android:textColor="#ffffff"
+            android:textSize="30dp" />
+
+    </RelativeLayout    >
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

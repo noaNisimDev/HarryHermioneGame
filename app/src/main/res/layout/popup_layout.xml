@@ -20,7 +20,7 @@
             android:src="@drawable/harrywon" />
 
         <Button
-            android:id="@+id/popup_BTN_newGame"
+            android:id="@+id/popup_BTN_gameOver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
