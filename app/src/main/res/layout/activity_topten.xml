@@ -4,32 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_gobletoffire"
     tools:context=".ActivityTopten">
 
-    <TableRow
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/img_gobletoffire"
-        >
+        android:background="@android:color/transparent">
 
-<!--        <TextView-->
-<!--            android:id="@+id/topten_TXT_title"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:text="Top 10 Wizards"-->
-<!--            android:textColor=""-->
+        <fragment
+            android:id="@+id/topten_FRG_fregmentTable"
+            android:name="com.example.harryhermionegame.TopTenTable"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
 
-<!--            android:textSize="30dp"-->
+            />
 
+        <fragment
+            android:id="@+id/topten_FRG_fregmentMap"
+            android:name="com.example.harryhermionegame.TopTenMap"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
 
-<!--            ></TextView>-->
-
-
-
-
-
-
-    </TableRow>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

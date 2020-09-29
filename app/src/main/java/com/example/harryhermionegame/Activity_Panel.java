@@ -1,6 +1,7 @@
 package com.example.harryhermionegame;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,13 +19,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 
 public class Activity_Panel extends AppCompatActivity {
+
+    // top ten
+    private TopTen topTen;
 
     //Hermione
     private ImageView panel_IMG_hermione;
@@ -74,7 +85,6 @@ public class Activity_Panel extends AppCompatActivity {
     Handler customHandler = new Handler();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +94,17 @@ public class Activity_Panel extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_panel);
 
+        topTen = new TopTen();
+
+        if (MySP.getInstance().getString(MySP.KEYS.NUM_OF_GAME, null) == null) {
+            MySP.getInstance().putString(MySP.KEYS.NUM_OF_GAME, "0");
+        }
+
 
         findViews();
 
-        randNum = hermioneStart + (int)(Math.random() * ((harryStart - hermioneStart) + 1));
+        randNum = hermioneStart + (int) (Math.random() * ((harryStart - hermioneStart) + 1));
         startGame();
-
         ProgressBar progressBarHermione = panel_PRB_simpleProgressBarHermione;
         progressBarHermione.setProgress(progressBarHermione.getMax());
         ProgressBar progressBarHarry = panel_PRB_simpleProgressBarHarry;
@@ -108,7 +123,7 @@ public class Activity_Panel extends AppCompatActivity {
                 updateColorPrb();
                 disableHermioneButtons();
                 enableHarryButtons();
-                counterHermione ++;
+                counterHermione++;
                 checkGameOver();
 
             }
@@ -118,12 +133,12 @@ public class Activity_Panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
-                ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
-                progressBar.setProgress(currentHarryPrb - valueOfPotionOfHermione, true );
+                ProgressBar progressBar = (ProgressBar) findViewById(R.id.panel_PRB_simpleProgressBarHarry);
+                progressBar.setProgress(currentHarryPrb - valueOfPotionOfHermione, true);
                 updateColorPrb();
                 disableHermioneButtons();
                 enableHarryButtons();
-                counterHermione ++;
+                counterHermione++;
                 checkGameOver();
             }
         });
@@ -133,12 +148,12 @@ public class Activity_Panel extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
-                ProgressBar progressBar = (ProgressBar)findViewById(R.id.panel_PRB_simpleProgressBarHarry);
-                progressBar.setProgress(currentHarryPrb - valueOfWandHermione, true );
+                ProgressBar progressBar = (ProgressBar) findViewById(R.id.panel_PRB_simpleProgressBarHarry);
+                progressBar.setProgress(currentHarryPrb - valueOfWandHermione, true);
                 updateColorPrb();
                 disableHermioneButtons();
                 enableHarryButtons();
-                counterHermione ++;
+                counterHermione++;
                 checkGameOver();
             }
         });
@@ -190,14 +205,11 @@ public class Activity_Panel extends AppCompatActivity {
 
     }
 
-    private void timer(){
 
-    }
-
-    private void startGame(){
-        if(randNum == hermioneStart){
+    private void startGame() {
+        if (randNum == hermioneStart) {
             disableHarryButtons();
-            Toast hermioneStartMsg = Toast.makeText(this,"Hermione's turn", Toast.LENGTH_SHORT);
+            Toast hermioneStartMsg = Toast.makeText(this, "Hermione's turn", Toast.LENGTH_SHORT);
             hermioneStartMsg.show();
         }
         // i have only one more option
@@ -210,42 +222,55 @@ public class Activity_Panel extends AppCompatActivity {
 
         panel_TIM_timer.stop();
 
-        if(lastPause != 0){
+        if (lastPause != 0) {
             panel_TIM_timer.setBase(panel_TIM_timer.getBase() +
                     SystemClock.elapsedRealtime() - lastPause);
-        }
-        else{
+        } else {
             panel_TIM_timer.setBase(SystemClock.elapsedRealtime());
         }
         panel_TIM_timer.start();
 
 
-
-
     }
-    private void updateColorPrb(){
-        if(panel_PRB_simpleProgressBarHarry.getProgress() <= rangeOfLastLife){
+
+    private void updateColorPrb() {
+        if (panel_PRB_simpleProgressBarHarry.getProgress() <= rangeOfLastLife) {
             panel_PRB_simpleProgressBarHarry.setBackgroundColor(redColor);
         }
-        if(panel_PRB_simpleProgressBarHermione.getProgress() <= rangeOfLastLife){
+        if (panel_PRB_simpleProgressBarHermione.getProgress() <= rangeOfLastLife) {
             panel_PRB_simpleProgressBarHermione.setBackgroundColor(redColor);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkGameOver() {
         boolean harryWon = false;
         boolean hermioneWon = false;
-        if(panel_PRB_simpleProgressBarHermione.getProgress() == 0){
+
+        if (panel_PRB_simpleProgressBarHermione.getProgress() == 0) {
             harryWon = true;
         }
-        if(panel_PRB_simpleProgressBarHarry.getProgress() == 0){
+        if (panel_PRB_simpleProgressBarHarry.getProgress() == 0) {
             hermioneWon = true;
         }
-        if(harryWon || hermioneWon){
+        if (harryWon || hermioneWon) {
 
             //disableAllButtons
             disableHarryButtons();
             disableHermioneButtons();
+
+            int numOfGame = Integer.parseInt(MySP.getInstance().getString(MySP.KEYS.NUM_OF_GAME, "0"));
+            Gson gson = new Gson();
+
+            if (numOfGame != 0) {
+                topTen = gson.fromJson(MySP.getInstance().getString(MySP.KEYS.USER_HIGH_SCORE, null), TopTen.class);
+            }
+
+
+            if (numOfGame < 10) {
+                ++numOfGame;
+                MySP.getInstance().putString(MySP.KEYS.NUM_OF_GAME, String.valueOf(numOfGame));
+            }
 
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_LAY_relativeLayout);
             relativeLayout.setBackgroundResource(R.drawable.img_backgroug_color);
@@ -265,32 +290,48 @@ public class Activity_Panel extends AppCompatActivity {
 
             long elapsedSecond = (SystemClock.elapsedRealtime() - panel_TIM_timer.getBase()) / 1000;
 
-            if(harryWon) {
+            if (harryWon) {
                 ((ImageView) popup_IMG_wizardWithCrown).setImageResource(R.drawable.harrywon);
                 //TODO- insert to shared preferences: who won, numOfActions
                 //TODO - the preferences should be sorted by numOfActions
-            }
+                //double lat, double lon, long timestamp, int numOfActions
+                // Score score = new Score(32.131943, 34.855859, elapsedSecond, counterHarry, "Harry");
 
+                if (numOfGame > 10 && topTen.getScores().lastIndexOf(topTen) > counterHarry) {
+                    topTen.getScores().remove(topTen.getScores().lastIndexOf(topTen));
+                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHarry, "Harry"));
+                }
+                if(numOfGame <= 10){
+                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHarry, "Harry"));
+                }
+
+            }
             else {
                 ((ImageView) popup_IMG_wizardWithCrown).setImageResource(R.drawable.hermionewon);
-                //TODO- insert to shared preferences: who won, numOfActions
-                //TODO - the preferences should be sorted by numOfActions
+
+                if (numOfGame > 10 && topTen.getScores().lastIndexOf(topTen) > counterHermione) {
+                    topTen.getScores().remove(topTen.getScores().lastIndexOf(topTen));
+                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHermione, "Hermione"));
+                }
+                if(numOfGame <= 10){
+                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHermione, "Hermione"));
+                }
+
             }
+            Collections.sort(topTen.scores);
+            MySP.getInstance().putString(MySP.KEYS.USER_HIGH_SCORE, gson.toJson(topTen));
 
             panel_TIM_timer.stop();
             panel_TIM_timer.setBase(SystemClock.elapsedRealtime());
             lastPause = 0;
             popupDialog.show();
-
         }
-
-
 
 
     }
 
 
-    private void disableHarryButtons(){
+    private void disableHarryButtons() {
         //set all buttons to be disabled
         panel_BTN_wandOfHarry.setEnabled(false);
         panel_BTN_potionOfHarry.setEnabled(false);
@@ -302,7 +343,7 @@ public class Activity_Panel extends AppCompatActivity {
         ((ImageButton) panel_BTN_spellOfFire).setImageResource(R.drawable.img_spelloffire_gray);
     }
 
-    private void disableHermioneButtons(){
+    private void disableHermioneButtons() {
         //set all buttons to be disabled
         panel_BTN_wandOfHermione.setEnabled(false);
         panel_BTN_potionOfHermione.setEnabled(false);
@@ -314,7 +355,7 @@ public class Activity_Panel extends AppCompatActivity {
         ((ImageButton) panel_BTN_spellOfWater).setImageResource(R.drawable.img_spellofwater_gray);
     }
 
-    private void enableHarryButtons(){
+    private void enableHarryButtons() {
 
         //set all buttons to be disabled
         panel_BTN_wandOfHarry.setEnabled(true);
@@ -327,7 +368,7 @@ public class Activity_Panel extends AppCompatActivity {
         ((ImageButton) panel_BTN_spellOfFire).setImageResource(R.drawable.img_fire);
     }
 
-    private void enableHermioneButtons(){
+    private void enableHermioneButtons() {
         //set all buttons to be disabled
         panel_BTN_wandOfHermione.setEnabled(true);
         panel_BTN_potionOfHermione.setEnabled(true);
