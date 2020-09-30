@@ -1,11 +1,13 @@
 package com.example.harryhermionegame;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.fragment.app.FragmentActivity;
+
+
 
 public class ActivityTopten extends FragmentActivity {
 
@@ -17,6 +19,5 @@ public class ActivityTopten extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_topten);
 
-        //Activity_Panel.mySp.putString(MySP.KEYS.USER_DATA, "1 : ");
     }
 }

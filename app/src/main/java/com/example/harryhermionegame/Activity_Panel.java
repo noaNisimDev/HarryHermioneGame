@@ -1,13 +1,11 @@
 package com.example.harryhermionegame;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,17 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 
 public class Activity_Panel extends AppCompatActivity {
@@ -267,7 +260,7 @@ public class Activity_Panel extends AppCompatActivity {
             }
 
 
-            if (numOfGame < 10) {
+            if (numOfGame <= 10) {
                 ++numOfGame;
                 MySP.getInstance().putString(MySP.KEYS.NUM_OF_GAME, String.valueOf(numOfGame));
             }
