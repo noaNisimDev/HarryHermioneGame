@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +18,9 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startService(new Intent(this, BackgroundMusic.class));
+
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -53,5 +55,23 @@ public class MenuActivity extends AppCompatActivity {
     private void findViews(){
         menu_BTN_startGame = findViewById(R.id.menu_BTN_startGame);
         menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, BackgroundMusic.class));
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        stopService(new Intent(this, BackgroundMusic.class));
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        startService(new Intent(this, BackgroundMusic.class));
+        super.onResume();
     }
 }

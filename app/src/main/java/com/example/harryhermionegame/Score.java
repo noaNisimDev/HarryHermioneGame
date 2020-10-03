@@ -20,7 +20,7 @@ public class Score implements Comparable<Score> {
         this.winner = winner;
     }
 
-    private double getLat(){
+    public double getLat(){
         return lat;
     }
 

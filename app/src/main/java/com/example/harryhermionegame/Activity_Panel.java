@@ -1,11 +1,15 @@
 package com.example.harryhermionegame;
 
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,13 +23,28 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 
 public class Activity_Panel extends AppCompatActivity {
+
+
+    // GPS
+    Location gps_loc;
+    Location network_loc;
+    Location final_loc;
+    double longitude;
+    double latitude;
+    String userCountry, userAddress;
+
 
     // top ten
     private TopTen topTen;
@@ -76,7 +95,8 @@ public class Activity_Panel extends AppCompatActivity {
     TextView tvTimer;
     private long startTime, timeInMilliseconds = 0;
     Handler customHandler = new Handler();
-
+    LocationManager locationManager;
+    GpsTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +109,18 @@ public class Activity_Panel extends AppCompatActivity {
 
         topTen = new TopTen();
 
+
         if (MySP.getInstance().getString(MySP.KEYS.NUM_OF_GAME, null) == null) {
             MySP.getInstance().putString(MySP.KEYS.NUM_OF_GAME, "0");
         }
 
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         findViews();
 
@@ -251,6 +279,7 @@ public class Activity_Panel extends AppCompatActivity {
             //disableAllButtons
             disableHarryButtons();
             disableHermioneButtons();
+            LatLng latLng = getLocation();
 
             int numOfGame = Integer.parseInt(MySP.getInstance().getString(MySP.KEYS.NUM_OF_GAME, "0"));
             Gson gson = new Gson();
@@ -285,29 +314,24 @@ public class Activity_Panel extends AppCompatActivity {
 
             if (harryWon) {
                 ((ImageView) popup_IMG_wizardWithCrown).setImageResource(R.drawable.harrywon);
-                //TODO- insert to shared preferences: who won, numOfActions
-                //TODO - the preferences should be sorted by numOfActions
-                //double lat, double lon, long timestamp, int numOfActions
-                // Score score = new Score(32.131943, 34.855859, elapsedSecond, counterHarry, "Harry");
 
                 if (numOfGame > 10 && topTen.getScores().lastIndexOf(topTen) > counterHarry) {
                     topTen.getScores().remove(topTen.getScores().lastIndexOf(topTen));
-                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHarry, "Harry"));
+                    topTen.scores.add(new Score(latLng.latitude, latLng.longitude, elapsedSecond, counterHarry, "Harry"));
                 }
-                if(numOfGame <= 10){
-                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHarry, "Harry"));
+                if (numOfGame <= 10) {
+                    topTen.scores.add(new Score(latLng.latitude, latLng.longitude, elapsedSecond, counterHarry, "Harry"));
                 }
 
-            }
-            else {
+            } else {
                 ((ImageView) popup_IMG_wizardWithCrown).setImageResource(R.drawable.hermionewon);
 
                 if (numOfGame > 10 && topTen.getScores().lastIndexOf(topTen) > counterHermione) {
                     topTen.getScores().remove(topTen.getScores().lastIndexOf(topTen));
-                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHermione, "Hermione"));
+                    topTen.scores.add(new Score(latLng.latitude, latLng.longitude, elapsedSecond, counterHermione, "Hermione"));
                 }
-                if(numOfGame <= 10){
-                    topTen.scores.add(new Score(32.131943, 34.855859, elapsedSecond, counterHermione, "Hermione"));
+                if (numOfGame <= 10) {
+                    topTen.scores.add(new Score(latLng.latitude, latLng.longitude, elapsedSecond, counterHermione, "Hermione"));
                 }
 
             }
@@ -393,6 +417,19 @@ public class Activity_Panel extends AppCompatActivity {
         //timer R-id
         panel_TIM_timer = findViewById(R.id.panel_TIM_timer);
 
+    }
+
+    public LatLng getLocation() {
+        gpsTracker = new GpsTracker(this);
+        if (gpsTracker.canGetLocation()) {
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+            LatLng latLng = new LatLng(latitude, longitude);
+            return latLng;
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
+        return null;
     }
 
 
