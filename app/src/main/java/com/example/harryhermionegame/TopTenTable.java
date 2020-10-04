@@ -11,7 +11,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -39,7 +38,7 @@ public class TopTenTable extends Fragment {
         TopTen topTen = gson.fromJson(MySP.getInstance().getString(MySP.KEYS.USER_HIGH_SCORE, null), TopTen.class);
 
         addRow("Winner", "#", true);
-        if(topTen != null) {
+        if (topTen != null) {
             for (Score score : topTen.getScores()) {
                 addRow(score.getWinner(), String.valueOf(score.getNumOfActions()), false);
             }
@@ -52,7 +51,7 @@ public class TopTenTable extends Fragment {
         TextView nameOfWinner = new TextView(getContext());
         TextView numberOfMoves = new TextView(getContext());
         TableRow.LayoutParams tableParams = new TableRow.LayoutParams();
-        tableParams.setMargins(20,20,5,5);
+        tableParams.setMargins(20, 20, 5, 5);
 
         Typeface typeface = getResources().getFont(R.font.cherry_swash_bold);
         nameOfWinner.setTypeface(typeface);
@@ -63,12 +62,10 @@ public class TopTenTable extends Fragment {
 
         nameOfWinner.setTextColor(Color.WHITE);
         numberOfMoves.setTextColor(Color.WHITE);
-        if(isHeadline) {
+        if (isHeadline) {
             nameOfWinner.setTextSize(25);
             numberOfMoves.setTextSize(25);
-        }
-        else
-        {
+        } else {
             nameOfWinner.setTextSize(18);
             numberOfMoves.setTextSize(18);
         }

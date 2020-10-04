@@ -1,6 +1,7 @@
 package com.example.harryhermionegame;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -9,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,9 +28,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 
 public class Activity_Panel extends AppCompatActivity {
@@ -68,6 +65,9 @@ public class Activity_Panel extends AppCompatActivity {
     //timer
     private Chronometer panel_TIM_timer;
     private long lastPause = SystemClock.elapsedRealtime();
+
+    //turn
+    private ImageView panel_IMG_turn;
 
     //popup
     private ImageView popup_IMG_wizardWithCrown;
@@ -106,7 +106,6 @@ public class Activity_Panel extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_panel);
-
         topTen = new TopTen();
 
 
@@ -139,6 +138,7 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                panel_IMG_turn.setVisibility(View.INVISIBLE);
                 int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
                 panel_PRB_simpleProgressBarHarry.setProgress(currentHarryPrb - valueOfWater, true);
                 updateColorPrb();
@@ -153,6 +153,7 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                panel_IMG_turn.setVisibility(View.INVISIBLE);
                 int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
                 ProgressBar progressBar = (ProgressBar) findViewById(R.id.panel_PRB_simpleProgressBarHarry);
                 progressBar.setProgress(currentHarryPrb - valueOfPotionOfHermione, true);
@@ -168,6 +169,7 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                panel_IMG_turn.setVisibility(View.INVISIBLE);
                 int currentHarryPrb = panel_PRB_simpleProgressBarHarry.getProgress();
                 ProgressBar progressBar = (ProgressBar) findViewById(R.id.panel_PRB_simpleProgressBarHarry);
                 progressBar.setProgress(currentHarryPrb - valueOfWandHermione, true);
@@ -184,6 +186,7 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                panel_IMG_turn.setVisibility(View.INVISIBLE);
                 int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
                 panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfFire, true);
                 updateColorPrb();
@@ -198,6 +201,7 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                panel_IMG_turn.setVisibility(View.INVISIBLE);
                 int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
                 panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfPotionOfHarry, true);
                 updateColorPrb();
@@ -212,6 +216,7 @@ public class Activity_Panel extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                panel_IMG_turn.setVisibility(View.INVISIBLE);
                 int currentHermionePrb = panel_PRB_simpleProgressBarHermione.getProgress();
                 panel_PRB_simpleProgressBarHermione.setProgress(currentHermionePrb - valueOfWandHarry, true);
                 updateColorPrb();
@@ -226,18 +231,13 @@ public class Activity_Panel extends AppCompatActivity {
 
     }
 
-
     private void startGame() {
         if (randNum == hermioneStart) {
             disableHarryButtons();
-            Toast hermioneStartMsg = Toast.makeText(this, "Hermione's turn", Toast.LENGTH_SHORT);
-            hermioneStartMsg.show();
-        }
-        // i have only one more option
-        else {
+            panel_IMG_turn.setBackgroundResource(R.drawable.hermionestart);
+        } else {
             disableHermioneButtons();
-            Toast harryStartMsg = Toast.makeText(this, "Harry's turn", Toast.LENGTH_SHORT);
-            harryStartMsg.show();
+            panel_IMG_turn.setBackgroundResource(R.drawable.harrystart);
         }
 
 
@@ -250,8 +250,6 @@ public class Activity_Panel extends AppCompatActivity {
             panel_TIM_timer.setBase(SystemClock.elapsedRealtime());
         }
         panel_TIM_timer.start();
-
-
     }
 
     private void updateColorPrb() {
@@ -417,6 +415,9 @@ public class Activity_Panel extends AppCompatActivity {
         //timer R-id
         panel_TIM_timer = findViewById(R.id.panel_TIM_timer);
 
+        //turns image
+        panel_IMG_turn = findViewById(R.id.panel_IMG_turn);
+
     }
 
     public LatLng getLocation() {
@@ -432,5 +433,23 @@ public class Activity_Panel extends AppCompatActivity {
         return null;
     }
 
+    @Override
+    protected void onStop() {
+        if (!BackgroundMusic.keepMusicGoing)
+            stopService(new Intent(this, BackgroundMusic.class));
+        super.onStop();
+        BackgroundMusic.keepMusicGoing = false;
+    }
 
+    @Override
+    public void onBackPressed() {
+        BackgroundMusic.keepMusicGoing = true;
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        startService(new Intent(this, BackgroundMusic.class));
+        super.onResume();
+    }
 }

@@ -1,7 +1,5 @@
 package com.example.harryhermionegame;
 
-import java.util.Comparator;
-
 public class Score implements Comparable<Score> {
 
     private double lat = 0.0;
@@ -11,7 +9,7 @@ public class Score implements Comparable<Score> {
     private String winner = "";
 
 
-    public Score(double lat, double lon, long timestamp, int numOfActions, String winner){
+    public Score(double lat, double lon, long timestamp, int numOfActions, String winner) {
 
         this.lat = lat;
         this.lon = lon;
@@ -20,7 +18,7 @@ public class Score implements Comparable<Score> {
         this.winner = winner;
     }
 
-    public double getLat(){
+    public double getLat() {
         return lat;
     }
 
@@ -55,6 +53,7 @@ public class Score implements Comparable<Score> {
         this.numOfActions = numOfActions;
         return this;
     }
+
     public void setWinner(String winner) {
         this.winner = winner;
     }
@@ -66,9 +65,9 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score score) {
-        if(this.numOfActions > score.numOfActions)
+        if (this.numOfActions > score.numOfActions)
             return 1;
-        else if(this.numOfActions == score.numOfActions)
+        else if (this.numOfActions == score.numOfActions)
             return 0;
         else
             return -1;

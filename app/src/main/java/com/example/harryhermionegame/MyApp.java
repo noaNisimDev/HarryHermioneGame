@@ -1,10 +1,7 @@
 package com.example.harryhermionegame;
 
 import android.app.Application;
-import android.content.res.Configuration;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 public class MyApp extends Application {
 

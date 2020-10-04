@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Panel"
-    >
+    tools:context=".Activity_Panel">
 
     <RelativeLayout
         android:id="@+id/panel_LAY_relativeLayout"
@@ -13,18 +12,25 @@
         android:layout_height="match_parent"
         android:background="@drawable/img_backgroug"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
 
         //timer - exe 2
+
         <Chronometer
             android:id="@+id/panel_TIM_timer"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textSize="30dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            />
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/panel_IMG_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/panel_TIM_timer"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"></ImageView>
 
         //hermione
 
@@ -38,16 +44,16 @@
 
         <ProgressBar
             android:id="@+id/panel_PRB_simpleProgressBarHermione"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_above="@id/panel_IMG_hermione"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/panel_IMG_hermione"
             android:layout_alignLeft="@+id/panel_IMG_hermione"
             android:layout_alignRight="@+id/panel_IMG_hermione"
-            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_alignParentLeft="true"
             android:background="#bc6f7d"
             android:max="100"
-            android:min="0"/>
+            android:min="0" />
 
         <ImageButton
             android:id="@+id/panel_BTN_spellOfWater"
@@ -55,8 +61,8 @@
             android:layout_height="70dp"
             android:layout_above="@id/panel_BTN_potionOfHermione"
             android:layout_toEndOf="@+id/panel_IMG_hermione"
-            android:scaleType="centerInside"
             android:background="@android:color/transparent"
+            android:scaleType="centerInside"
             android:src="@drawable/img_water"
             app:layout_constraintBottom_toTopOf="@+id/panel_IMG_hermione" />
 
@@ -66,8 +72,8 @@
             android:layout_height="70dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/panel_IMG_hermione"
-            android:scaleType="fitCenter"
             android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
             android:src="@drawable/img_potionhermione" />
 
         <ImageButton
@@ -76,8 +82,8 @@
             android:layout_height="70dp"
             android:layout_below="@id/panel_BTN_potionOfHermione"
             android:layout_toEndOf="@+id/panel_IMG_hermione"
-            android:scaleType="fitCenter"
             android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
             android:src="@drawable/img_wandhermione" />
 
 
@@ -94,13 +100,13 @@
 
         <ProgressBar
             android:id="@+id/panel_PRB_simpleProgressBarHarry"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_above="@id/panel_IMG_harry"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/panel_IMG_harry"
             android:layout_alignLeft="@+id/panel_IMG_harry"
             android:layout_alignRight="@+id/panel_IMG_harry"
-            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_alignParentRight="true"
             android:background="#5592c1"
             android:max="100" />
 
@@ -110,9 +116,9 @@
             android:layout_height="70dp"
             android:layout_above="@id/panel_BTN_potionOfHarry"
             android:layout_toLeftOf="@+id/panel_IMG_harry"
+            android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/img_fire"
-            android:background="@android:color/transparent"
             app:layout_constraintBottom_toTopOf="@+id/panel_IMG_hermione" />
 
         <ImageButton
@@ -121,8 +127,8 @@
             android:layout_height="70dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/panel_IMG_harry"
-            android:scaleType="fitCenter"
             android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
             android:src="@drawable/img_potionharry" />
 
         <ImageButton
@@ -131,11 +137,9 @@
             android:layout_height="70dp"
             android:layout_below="@id/panel_BTN_potionOfHarry"
             android:layout_toLeftOf="@+id/panel_IMG_harry"
-            android:scaleType="fitCenter"
             android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
             android:src="@drawable/img_wandharry" />
-
-
 
 
     </RelativeLayout>

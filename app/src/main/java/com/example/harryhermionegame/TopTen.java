@@ -6,7 +6,7 @@ public class TopTen {
 
     ArrayList<Score> scores;
 
-    public TopTen(){
+    public TopTen() {
 
         scores = new ArrayList<Score>();
     }

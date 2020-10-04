@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
-   private Button menu_BTN_startGame;
-   private Button menu_BTN_topTen;
+    private Button menu_BTN_startGame;
+    private Button menu_BTN_topTen;
 
 
     @Override
@@ -32,16 +32,18 @@ public class MenuActivity extends AppCompatActivity {
         menu_BTN_startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                BackgroundMusic.keepMusicGoing = true;
                 launchActivity(Activity_Panel.class);
             }
         });
         menu_BTN_topTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                BackgroundMusic.keepMusicGoing = true;
                 launchActivity(ActivityTopten.class);
+
             }
         });
-
 
 
     }
@@ -52,21 +54,17 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void findViews(){
+    private void findViews() {
         menu_BTN_startGame = findViewById(R.id.menu_BTN_startGame);
         menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
     }
 
     @Override
-    protected void onDestroy() {
-        stopService(new Intent(this, BackgroundMusic.class));
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        stopService(new Intent(this, BackgroundMusic.class));
-        super.onPause();
+    protected void onStop() {
+        if (!BackgroundMusic.keepMusicGoing)
+            stopService(new Intent(this, BackgroundMusic.class));
+        super.onStop();
+        BackgroundMusic.keepMusicGoing = false;
     }
 
     @Override

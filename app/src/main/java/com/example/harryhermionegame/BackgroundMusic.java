@@ -5,31 +5,33 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
-import androidx.annotation.Nullable;
-
 public class BackgroundMusic extends Service {
     MediaPlayer mp;
+    static boolean keepMusicGoing = false;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-    public void onCreate()
-    {
+
+    public void onCreate() {
         mp = MediaPlayer.create(this, R.raw.backgoundmusic);
         mp.setLooping(true);
     }
-    public void onDestroy()
-    {
-        mp.stop();
-        mp.release();
-        stopSelf();
-        super.onDestroy();
+
+    public void onDestroy() {
+        if (!keepMusicGoing) {
+            mp.stop();
+            mp.release();
+            stopSelf();
+            super.onDestroy();
+        }
     }
 
 
-
-    public void onStart(Intent intent,int startid){
-
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         mp.start();
+        return super.onStartCommand(intent, flags, startId);
     }
 }
