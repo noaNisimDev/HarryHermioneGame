@@ -131,9 +131,7 @@ public class Activity_Panel extends AppCompatActivity {
         progressBarHarry.setProgress(progressBarHarry.getMax());
 
 
-        //callback - listener
         //hermione
-
         panel_BTN_spellOfWater.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -149,6 +147,7 @@ public class Activity_Panel extends AppCompatActivity {
 
             }
         });
+
         panel_BTN_potionOfHermione.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -227,8 +226,6 @@ public class Activity_Panel extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void startGame() {
